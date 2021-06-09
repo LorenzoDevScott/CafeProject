@@ -3,8 +3,9 @@ package com.perscholas.CafeExercises;
 public class CafeMain {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Product coffee =  new Product();
+		Product espresso = new Product();
+		Product cappuccino = new Product();
 	}
 
 }
