@@ -1,10 +1,12 @@
 package com.perscholas.CafeExercises;
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class CafeMain {
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
+		DecimalFormat df = new DecimalFormat("0.00");
 		
 		Product coffee =  new Product();
 		coffee.setName("coffee");
@@ -26,30 +28,40 @@ public class CafeMain {
 		
 		System.out.print("How many orders of a coffee do you want?: ");
 		coffee.setQuantity(input.nextInt());
-		System.out.println("Here is the " + coffee.getName() + 
-				" you ordered. " + coffee.getDescription() + 
-				" The subtotal for the coffees is: $" + coffee.calculateProductTotal() + "\n");
+		ordering(coffee);
+		double coffeeSubtotal = coffee.calculateProductTotal();
 		
 		System.out.print("How many orders of an espresso do you want?: ");
 		espresso.setQuantity(input.nextInt());
-		System.out.println("Here is the " + espresso.getName() + 
-				" you ordered. " + espresso.getDescription() + 
-				" The subtotal for espressos is: $" + espresso.calculateProductTotal() + "\n");
+		ordering(espresso);
+		double espressoSubtotal = espresso.calculateProductTotal();
 		
 		System.out.print("How many orders of a cappuccino do you want?: ");
 		cappuccino.setQuantity(input.nextInt());
-		System.out.println("Here is the " + cappuccino.getName() + 
-				" you ordered. " + cappuccino.getDescription() + 
-				" The subtotal for cappuccinos is: $" + cappuccino.calculateProductTotal() + "\n");
+		ordering(cappuccino);
+		double cappuccinoSubtotal = cappuccino.calculateProductTotal();
 		
 		input.close();
 		
+		// Stored the calculating values to variables for cleaner printing statement
+		double salesTaxRate = 0.1;
+		double orderSubTotals = coffeeSubtotal + espressoSubtotal + cappuccinoSubtotal;
+		double salesTaxTotal = orderSubTotals * salesTaxRate;
+		double orderTotal = orderSubTotals + salesTaxTotal;
+		
 		System.out.println("The subtotal for your entire order is: " + 
-		(coffee.calculateProductTotal() + espresso.calculateProductTotal() + cappuccino.calculateProductTotal()) +
+		(orderSubTotals) +
 		". The sales tax rate is at 10%. The total sales tax is: " +
-		((coffee.calculateProductTotal() + espresso.calculateProductTotal() + cappuccino.calculateProductTotal()) * .1) +
-		". Your total is going to be: $");
+		df.format(salesTaxTotal) +
+		". Your total is going to be: $" + df.format(orderTotal));
 		
 	}
+	
+	static void ordering(Product obj) {
+		System.out.println("Here is the " + obj.getName() + 
+				" you ordered. " + obj.getDescription() + 
+				" The subtotal for the " + obj.getName() + " is: $" + obj.calculateProductTotal() + "\n");
+	}
+	
 
 }
